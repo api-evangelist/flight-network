@@ -1,0 +1,59 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.etraveli.mytrip.android",
+      "sha256_cert_fingerprints":
+      ["47:EC:15:19:2C:C1:5A:D5:F0:D4:38:05:8E:FB:50:EE:38:E5:EB:0A:68:4A:5E:43:32:91:81:9B:71:97:89:35",
+        "32:3F:9F:2D:D6:00:3B:32:34:2E:8B:27:BB:FB:EC:2D:F9:38:DC:EB:2D:A5:AE:E2:25:15:35:0E:57:62:F8:66"]
+    }
+  },
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.etraveli.android",
+      "sha256_cert_fingerprints":
+      ["74:E9:70:DA:5D:74:94:A4:3A:B8:92:07:A4:02:C2:72:96:04:4E:2B:A2:22:C4:FC:40:EB:AA:0F:83:CE:2D:7B",
+        "32:3F:9F:2D:D6:00:3B:32:34:2E:8B:27:BB:FB:EC:2D:F9:38:DC:EB:2D:A5:AE:E2:25:15:35:0E:57:62:F8:66"]
+    }
+  },
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.etraveli.flightnetwork.android",
+      "sha256_cert_fingerprints":
+      ["09:29:84:76:1B:D5:CC:DC:68:E0:63:F3:33:6F:1B:D7:87:72:F4:CD:95:5B:C0:74:54:27:07:75:F5:1F:84:D1",
+        "32:3F:9F:2D:D6:00:3B:32:34:2E:8B:27:BB:FB:EC:2D:F9:38:DC:EB:2D:A5:AE:E2:25:15:35:0E:57:62:F8:66"]
+    }
+  },
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.etraveli.mytrip.android.debug",
+      "sha256_cert_fingerprints":
+      ["32:8A:E3:9B:92:EA:D5:21:CF:CA:41:D4:FA:08:17:80:D8:D2:45:E6:E3:1E:7A:DB:9D:0A:F2:84:32:49:AC:30"]
+    }
+  },
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.etraveli.android.debug",
+      "sha256_cert_fingerprints":
+      ["32:8A:E3:9B:92:EA:D5:21:CF:CA:41:D4:FA:08:17:80:D8:D2:45:E6:E3:1E:7A:DB:9D:0A:F2:84:32:49:AC:30"]
+    }
+  },
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.etraveli.flightnetwork.android.debug",
+      "sha256_cert_fingerprints":
+      ["32:8A:E3:9B:92:EA:D5:21:CF:CA:41:D4:FA:08:17:80:D8:D2:45:E6:E3:1E:7A:DB:9D:0A:F2:84:32:49:AC:30"]
+    }
+  }
+]

@@ -31,6 +31,26 @@ Every candidate developer host is NXDOMAIN — `developer.`, `developers.`, `doc
 
 See [review.yml](review.yml) for the full probe record and the switching-cost analysis.
 
+## Agent surface
+
+Flight Network has no API, but it does publish a real, substantial [`llms.txt`](llms/flight-network-llms.txt) at the site root (harvested verbatim, ~25 KB, self-dated June 2026). It is not a developer document — it is a distribution and conduct policy addressed to AI systems: a map of ~80 regional domains with language logic, the flight/ancillary product catalogue (virtual interlining, self-transfer, Flexible Ticket, Cancellation Guarantee, Fast Track, AirHelp), the Booking.com referral boundary for Stays and Cars, a support-escalation hierarchy with expected response times, and explicit DO/DON'T rules (no invented promo codes, no refund promises, no PII collection, no real-time inventory claims, no impersonation). The result is a company that is addressable by agents as a referral target while remaining entirely uncallable. That posture is captured in [agentic-access/flight-network-agentic-access.yml](agentic-access/flight-network-agentic-access.yml).
+
+## Artifacts
+
+| Artifact | File | Method |
+| --- | --- | --- |
+| llms.txt | [llms/flight-network-llms.txt](llms/flight-network-llms.txt) | searched (verbatim) |
+| Well-known index | [well-known/flight-network-well-known.yml](well-known/flight-network-well-known.yml) | searched |
+| security.txt | [well-known/flight-network-security.txt](well-known/flight-network-security.txt) | searched (verbatim) |
+| Apple app-site-association | [well-known/flight-network-apple-app-site-association.json](well-known/flight-network-apple-app-site-association.json) | searched (verbatim) |
+| Android assetlinks | [well-known/flight-network-assetlinks.json](well-known/flight-network-assetlinks.json) | searched (verbatim) |
+| Agentic access | [agentic-access/flight-network-agentic-access.yml](agentic-access/flight-network-agentic-access.yml) | searched |
+| Conformance | [conformance/flight-network-conformance.yml](conformance/flight-network-conformance.yml) | derived |
+| Vulnerability disclosure | [security/flight-network-vulnerability-disclosure.yml](security/flight-network-vulnerability-disclosure.yml) | searched |
+| Domain security | [security/flight-network-domain-security.yml](security/flight-network-domain-security.yml) | probed |
+
+No `openapi/`, `asyncapi/`, `mcp/`, `skills/`, `packages/`, `scopes/`, `authentication/`, `conventions/`, `errors/`, `sandbox/`, `cli/` or `changelog/` artifacts exist, because none of the things they describe are published. npm, PyPI, RubyGems and crates.io return nothing first-party; [github.com/FlightNetwork](https://github.com/FlightNetwork) is a real but dormant org holding two forks and no SDK.
+
 ## Switching Cost
 
 | Dimension | Finding |

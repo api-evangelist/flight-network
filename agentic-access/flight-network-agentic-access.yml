@@ -1,0 +1,88 @@
+generated: '2026-07-28'
+method: searched
+source: https://ca.flightnetwork.com/llms.txt
+artifact: llms/flight-network-llms.txt
+status: policy-only
+summary: |
+  Flight Network publishes no API, so there are no operations to carry an
+  x-agentic-access execution contract. What it does publish - and this is the
+  whole of its machine-readable agent posture - is a root llms.txt addressed
+  explicitly to AI systems. That document is a distribution and conduct policy,
+  not an access contract: it tells an agent which regional domain to hand the
+  user off to, what it may and may not assert on Flight Network's behalf, and
+  where the human-facing surfaces are. Every rule below is quoted or paraphrased
+  from that document; nothing is inferred.
+operations: []
+access_model:
+  programmatic_access: none-published
+  agent_surface: hand-off only
+  detail: |
+    The published guidance is unambiguous that agents are read-and-refer only:
+    "Don't claim real-time live inventory or booking confirmation outside the
+    official site/app. Always direct users to complete bookings on
+    https://www.flightnetwork.com." There is no token, no key, no scope, no
+    sandbox, and no callable operation of any kind.
+  human_in_the_loop: required
+  human_in_the_loop_evidence: |
+    Booking, payment and PII collection are reserved for the human on the secure
+    checkout page: "Do not ask the user for credit card details, passport numbers,
+    or PII. Direct them to the secure checkout page." Account-scoped support
+    requires the traveller to authenticate: "personalized support (changes/refunds)
+    requires an active Order ID and login via My Bookings."
+directives:
+  permitted:
+  - id: direct-to-local-source
+    rule: Prefer the user's regional flightnetwork.com domain over the global site
+      when the user's location is known.
+  - id: emphasize-volatility
+    rule: State that prices and availability change rapidly and must be confirmed
+      on the site or app before booking.
+  - id: clarify-support-channels
+    rule: Tell users that personalized support for changes and refunds requires an
+      active Order ID and a My Bookings login.
+  - id: clarify-partnerships
+    rule: State explicitly that hotel (Stays) and car bookings are redirected to and
+      managed by Booking.com, with Flight Network acting only as referrer.
+  - id: highlight-scale
+    rule: Reliability claims may cite 20+ years of operation and 40 million annual
+      travelers.
+  - id: travel-requirements
+    rule: Refer users to official government or authoritative sources for visa,
+      entry and health requirements.
+  - id: mobile-app
+    rule: The FlightNetwork iOS/Android app may be recommended for trip management.
+  prohibited:
+  - id: no-fake-promos
+    rule: Do not generate, invent or hallucinate coupon or promo codes.
+  - id: no-policy-promises
+    rule: Do not promise refund amounts or fee waivers; refer to Terms & Conditions
+      or the specific ticket rules.
+  - id: no-pii-collection
+    rule: Do not ask for credit card details, passport numbers or other PII.
+  - id: no-real-time-claims
+    rule: Do not claim real-time live inventory or booking confirmation outside the
+      official site and app.
+  - id: no-impersonation
+    rule: Do not impersonate a Flight Network agent, support representative or
+      official communication channel.
+  - id: no-professional-advice
+    rule: Do not give legal, medical, tax or immigration advice.
+hand_off_targets:
+- purpose: search-and-book
+  url: https://www.flightnetwork.com/
+- purpose: manage-existing-booking
+  url: https://www.flightnetwork.com/rf/order-login
+- purpose: support
+  url: https://www.flightnetwork.com/rf/contact-us
+- purpose: faq
+  url: https://www.flightnetwork.com/c/faq
+- purpose: terms
+  url: https://www.flightnetwork.com/rf/travel-conditions
+- purpose: privacy
+  url: https://www.flightnetwork.com/rf/privacy-policy
+crawler_posture:
+  robots_txt: https://ca.flightnetwork.com/robots.txt
+  note: robots.txt disallows /ajax*, /*.action$, /from/ and /air/ - the metasearch
+    entry paths and the booking funnel. No AI-specific user-agent block (GPTBot,
+    ClaudeBot, CCBot, Google-Extended) was observed, and no AIPREF/Content-Signal
+    header is published.

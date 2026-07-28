@@ -1,0 +1,101 @@
+generated: '2026-07-28'
+method: derived
+source: review.yml + well-known/flight-network-well-known.yml + live probes of ca.flightnetwork.com
+scope: |
+  Flight Network publishes no API, so every API-contract standard below is
+  recorded as not conformant for the plain reason that there is no contract to
+  conform. What it does conform to is the small set of web-platform discovery
+  standards a consumer site carries - RFC 9116 security.txt, the two mobile
+  app-link declarations, robots/sitemap - plus the emerging llms.txt convention,
+  which it implements unusually well for a company with no developer surface.
+standards:
+- id: openapi
+  conforms: false
+  evidence: /openapi.json, /swagger.json, /api-docs all 404 on ca.flightnetwork.com;
+    no spec published on any reachable host.
+- id: asyncapi
+  conforms: false
+  evidence: No event, streaming or webhook surface is published.
+- id: graphql
+  conforms: false
+  evidence: /graphql returns HTTP 200 with an Akamai "Request Rejected (Def.)" HTML
+    interstitial, not a GraphQL response or schema.
+- id: oauth2
+  conforms: false
+  evidence: /.well-known/oauth-authorization-server 404; no OAuth surface documented.
+- id: oidc
+  conforms: false
+  evidence: /.well-known/openid-configuration 404.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: 'No API error surface published. The only observed error body is the JBoss
+    RESTEasy default text at /api ("RESTEASY003210: Could not find resource for full
+    path"), which is not problem+json.'
+- id: rfc9727-api-catalog
+  conforms: false
+  evidence: /.well-known/api-catalog 404.
+- id: rfc9116-security-txt
+  conforms: true
+  evidence: /.well-known/security.txt returns 200 with a Contact field
+    (mailto:security@etraveligroup.com). Partial conformance only - RFC 9116 requires
+    an Expires field, which is absent, and no Policy, Encryption, Canonical or
+    Preferred-Languages field is set.
+- id: llms-txt
+  conforms: true
+  evidence: /llms.txt returns 200 on the regional hosts with a ~25 KB structured
+    document (H1, blockquote summary, sectioned link map, explicit DO/DON'T
+    directives for AI systems, self-dated Jun 2026). Saved verbatim to
+    llms/flight-network-llms.txt.
+- id: apple-universal-links
+  conforms: true
+  evidence: /.well-known/apple-app-site-association returns 200 with applinks details
+    for the Etraveli iOS appIDs.
+- id: android-app-links
+  conforms: true
+  evidence: /.well-known/assetlinks.json returns 200 with delegate_permission/common.handle_all_urls
+    for the Etraveli Android packages.
+- id: sitemaps-xml
+  conforms: true
+  evidence: /sitemap.xml returns 200 (439 URLs) and is declared in robots.txt along
+    with a second FAQ sitemap.
+- id: robots-txt
+  conforms: true
+  evidence: /robots.txt returns 200 with a single User-agent:* group. No AI-specific
+    crawler directives (GPTBot, ClaudeBot, CCBot, Google-Extended) are present.
+- id: iata-ndc
+  conforms: not-applicable
+  evidence: Flight Network is a retailer, not an airline. No NDC certification level,
+    NDC API or IATA NDC registry claim is published. NDC content reaches the corporate
+    family upstream through the Etraveli sibling TripStack, whose API is sales-gated
+    and separately branded.
+- id: opentravel-ota
+  conforms: false
+  evidence: No OpenTravel/OTA message set is referenced anywhere on the domain.
+- id: htng
+  conforms: false
+  evidence: No HTNG specification is referenced.
+- id: hsts
+  conforms: true
+  evidence: 'ca.flightnetwork.com returns strict-transport-security: max-age=86400
+    - present but well below the 31536000 preload threshold; www.flightnetwork.com
+    returned no HSTS header on probe. See security/flight-network-domain-security.yml.'
+- id: dnssec
+  conforms: false
+  evidence: flightnetwork.com is not DNSSEC signed.
+- id: dmarc
+  conforms: partial
+  evidence: 'DMARC record present with policy p=none (monitor only), not quarantine
+    or reject. SPF present. No CAA records.'
+industry_accreditations:
+  note: |
+    These are travel-industry regulatory registrations the company publishes about
+    itself, not API or information-security certifications. No SOC 2, ISO 27001,
+    PCI DSS, HIPAA or FedRAMP attestation is published, and there is no trust
+    center - so no Compliance pointer is claimed for this provider.
+  claims:
+  - name: TICO Registration
+    value: '50009248'
+    source: https://ca.flightnetwork.com/c/about-us
+  - name: IATA Certified Travel Agents
+    value: claimed on the About Us page
+    source: https://ca.flightnetwork.com/c/about-us

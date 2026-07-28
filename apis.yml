@@ -12,8 +12,12 @@ description: 'Flight Network (Flight Network Ltd, 145 King St. West Suite 2850, 
   (the group''s B2B LCC/NDC/virtual-interlining API), not as a content owner. Its API posture is honest
   and thin: no developer portal, no published API documentation, no machine-readable specification, and
   no exit path. developer/developers/docs/api.flightnetwork.com are all NXDOMAIN, /openapi.json and /swagger.json
-  return 404, and the only surfaces reachable are the consumer booking site and a security.txt pointing
-  at security@etraveligroup.com. Any B2B or travel-seller access is arranged by commercial agreement off-web.'
+  return 404, and the only machine-readable surfaces reachable are the consumer booking site, a security.txt
+  pointing at security@etraveligroup.com, the iOS/Android app-link declarations, and - the one genuine
+  find - a substantial provider-published llms.txt at the site root that hands agents a regional domain
+  map, a product and ancillary catalogue, a support-escalation hierarchy, and explicit DO/DON''T directives
+  for AI systems. Flight Network is thus addressable by agents as a referral target while remaining
+  entirely uncallable. Any B2B or travel-seller access is arranged by commercial agreement off-web.'
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/groq.png
 tags:
 - Travel
@@ -44,8 +48,6 @@ common:
   url: https://ca.flightnetwork.com/rf/travel-conditions
 - type: PrivacyPolicy
   url: https://ca.flightnetwork.com/rf/privacy-policy
-- type: SecurityTxt
-  url: https://ca.flightnetwork.com/.well-known/security.txt
 - type: Robots
   url: https://ca.flightnetwork.com/robots.txt
 - type: Sitemap
@@ -55,8 +57,41 @@ common:
 - type: Documentation
   name: Airline Information
   url: https://ca.flightnetwork.com/rf/carriers
+- type: Support
+  name: Customer Support & Help Center
+  url: https://www.flightnetwork.com/rf/contact-us
+- type: Login
+  name: My Bookings (manage an existing booking)
+  url: https://www.flightnetwork.com/rf/order-login
+- type: MobileApp
+  name: FlightNetwork iOS & Android app
+  url: https://www.flightnetwork.com/rf/mobile-app-download
+- type: Accessibility
+  name: Accessibility Statement (WCAG 2.1)
+  url: https://www.flightnetwork.com/c/accessibility
+- type: Sustainability
+  url: https://www.flightnetwork.com/rf/sustainability
+- type: GitHubOrganization
+  name: Flight Network on GitHub (2 forked repos, no SDKs)
+  url: https://github.com/FlightNetwork
 - type: LinkedIn
   url: https://www.linkedin.com/company/flight-network
+- type: LLMsTxt
+  name: llms.txt (provider-published, harvested verbatim)
+  url: llms/flight-network-llms.txt
+- type: WellKnown
+  url: well-known/flight-network-well-known.yml
+- type: SecurityTxt
+  name: security.txt (harvested)
+  url: well-known/flight-network-security.txt
+- type: Security
+  name: Security contact (RFC 9116)
+  url: https://ca.flightnetwork.com/.well-known/security.txt
+- type: Conformance
+  url: conformance/flight-network-conformance.yml
+- type: AgenticAccess
+  name: Published AI-system directives (policy-only, no API)
+  url: agentic-access/flight-network-agentic-access.yml
 - type: ParentCompany
   name: Etraveli Group
   url: https://www.etraveligroup.com/

@@ -1,0 +1,32 @@
+{
+	"applinks": {
+		"details": [
+			{
+				"appIDs": [ "S3ZVMP5X66.com.etraveli.mytrip.com", "S3ZVMP5X66.com.etraveli.gotogate", "S3ZVMP5X66.com.etraveli.flightnetwork" ],
+				"components": [
+					{
+						"/": "/from/skyscanner/air/*",
+					},
+					{
+						"/": "/from/kayak/air/*",
+					}
+				]
+			},
+			{
+				"appIDs": [ "KFHXNEN36B.com.etraveli.travelstart" ],
+				"components": [
+					{
+						"/": "/from/kayak/air/*",
+					}
+				]
+			}
+		]
+	},
+	"webcredentials": {
+		"apps": []
+	},
+	
+	"appclips": {
+		"apps": []
+	}
+}

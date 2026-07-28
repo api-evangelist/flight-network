@@ -1,0 +1,68 @@
+generated: '2026-07-28'
+method: searched
+source: https://ca.flightnetwork.com/.well-known/
+host: https://ca.flightnetwork.com
+note: |
+  The apex and www hosts (flightnetwork.com, www.flightnetwork.com) sit behind
+  Akamai bot mitigation and return 403 to non-browser clients, so every probe was
+  run against the reachable regional host ca.flightnetwork.com, which shares the
+  same flightnetwork-web.edgekey.net origin. Flight Network publishes no API
+  discovery documents - no api-catalog, no OpenID/OAuth metadata, no ai-plugin -
+  only the RFC 9116 security contact and the mobile universal-link declarations.
+documents:
+- path: /.well-known/security.txt
+  standard: RFC 9116
+  status: 200
+  file: flight-network-security.txt
+  note: Single Contact line; disclosure is routed to the parent, security@etraveligroup.com.
+    No Policy, Expires, Encryption, Preferred-Languages or Canonical field.
+- path: /.well-known/apple-app-site-association
+  standard: Apple Universal Links
+  status: 200
+  file: flight-network-apple-app-site-association.json
+  note: Declares /from/skyscanner/air/* and /from/kayak/air/* for appIDs
+    com.etraveli.flightnetwork, com.etraveli.gotogate, com.etraveli.mytrip and
+    com.etraveli.travelstart - a machine-readable record of metasearch-fed distribution.
+    Saved verbatim; note the served document contains trailing commas and is therefore
+    not strictly valid JSON - that defect is the provider's, and the file is preserved
+    as delivered rather than corrected.
+- path: /.well-known/assetlinks.json
+  standard: Android App Links (Digital Asset Links)
+  status: 200
+  file: flight-network-assetlinks.json
+  note: Delegates handle_all_urls to the Etraveli Group Android packages.
+- path: /.well-known/api-catalog
+  standard: RFC 9727
+  status: 404
+- path: /.well-known/openid-configuration
+  standard: OpenID Connect Discovery 1.0
+  status: 404
+- path: /.well-known/oauth-authorization-server
+  standard: RFC 8414
+  status: 404
+- path: /.well-known/ai-plugin.json
+  status: 404
+- path: /.well-known/llms.txt
+  status: 404
+  note: llms.txt is published at the site root instead - see llms/flight-network-llms.txt.
+- path: /.well-known/change-password
+  standard: A Well-Known URL for Changing Passwords
+  status: 404
+- path: /.well-known/gpc.json
+  standard: Global Privacy Control
+  status: 404
+other_root_documents:
+- path: /llms.txt
+  status: 200
+  file: ../llms/flight-network-llms.txt
+  note: Provider-published llms.txt, ~25 KB, self-dated "current as of Jun 2026".
+    Also served on the regional hosts (us.flightnetwork.com/llms.txt returns 200);
+    the Akamai-protected www host returns 403 to non-browser clients.
+- path: /llms-full.txt
+  status: 404
+- path: /ai.txt
+  status: 404
+- path: /robots.txt
+  status: 200
+- path: /sitemap.xml
+  status: 200
