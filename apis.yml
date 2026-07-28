@@ -1,0 +1,73 @@
+aid: flight-network
+url: https://raw.githubusercontent.com/api-evangelist/flight-network/refs/heads/main/apis.yml
+name: Flight Network
+kind: company
+description: 'Flight Network (Flight Network Ltd, 145 King St. West Suite 2850, Toronto, Ontario, TICO
+  Registration 50009248) is a Canadian online travel agency founded in 2005 and owned by Sweden''s Etraveli
+  Group since 2019. It retails flights plus hotels and car rentals to consumers across 75+ markets in
+  35 languages, sourcing air content through the GDSs - its own About Us page carries the Amadeus and
+  Sabre marks and claims "IATA Certified Travel Agents" - and reaching buyers through its own sites, its
+  iOS/Android apps, metasearch deep links from Skyscanner and Kayak, and third-party affiliate networks.
+  It sits in the distribution chain as a retailer downstream of the GDSs and of its Etraveli sibling TripStack
+  (the group''s B2B LCC/NDC/virtual-interlining API), not as a content owner. Its API posture is honest
+  and thin: no developer portal, no published API documentation, no machine-readable specification, and
+  no exit path. developer/developers/docs/api.flightnetwork.com are all NXDOMAIN, /openapi.json and /swagger.json
+  return 404, and the only surfaces reachable are the consumer booking site and a security.txt pointing
+  at security@etraveligroup.com. Any B2B or travel-seller access is arranged by commercial agreement off-web.'
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/groq.png
+tags:
+- Travel
+- Canada
+- Aviation
+- Airline
+- OTA
+- Booking
+- Distribution
+- Flights
+- Hotels
+- Car Rental
+- GDS
+created: '2026-07-28'
+modified: '2026-07-28'
+specificationVersion: '0.19'
+apis: []
+common:
+- type: Website
+  url: https://www.flightnetwork.com/
+- type: Website
+  name: Flight Network Canada
+  url: https://ca.flightnetwork.com/
+- type: About
+  url: https://ca.flightnetwork.com/c/about-us
+- type: TermsOfService
+  name: Travel Conditions
+  url: https://ca.flightnetwork.com/rf/travel-conditions
+- type: PrivacyPolicy
+  url: https://ca.flightnetwork.com/rf/privacy-policy
+- type: SecurityTxt
+  url: https://ca.flightnetwork.com/.well-known/security.txt
+- type: Robots
+  url: https://ca.flightnetwork.com/robots.txt
+- type: Sitemap
+  url: https://ca.flightnetwork.com/sitemap.xml
+- type: FAQ
+  url: https://ca.flightnetwork.com/c/faq
+- type: Documentation
+  name: Airline Information
+  url: https://ca.flightnetwork.com/rf/carriers
+- type: LinkedIn
+  url: https://www.linkedin.com/company/flight-network
+- type: ParentCompany
+  name: Etraveli Group
+  url: https://www.etraveligroup.com/
+- type: Documentation
+  name: Etraveli Group TripStack (sibling B2B flight API)
+  url: https://www.etraveligroup.com/our-platform/b2b/trip-stack/
+- type: Website
+  name: TripStack
+  url: https://www.tripstack.com/
+- type: Review
+  url: review.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

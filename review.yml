@@ -1,0 +1,346 @@
+aid: flight-network
+name: Flight Network
+review:
+  question: Does Flight Network publish a public developer portal, API documentation,
+    or a machine-readable API specification?
+  answer: false
+  date: '2026-07-28'
+  reviewer: API Evangelist
+  method: Direct HTTP and DNS probing of flightnetwork.com and its regional hosts,
+    plus reading the company's own About Us, Travel Conditions, robots.txt, sitemap.xml
+    and .well-known surfaces.
+  specsHarvested: 0
+  openapiDirectory: none
+findings:
+  summary: |
+    Flight Network publishes no developer surface of any kind. Every candidate
+    developer host is NXDOMAIN (developer., developers., docs., api., partner.,
+    partners., affiliate., affiliates., b2b., apidocs., sandbox., connect.,
+    agent., agents., portal., seller., travelseller.). The apex and www hosts sit
+    behind Akamai and return 403 to non-browser clients; the regional hosts
+    (ca./us./uk.flightnetwork.com, same edgekey origin) serve 200 and were used
+    for all content verification.
+
+    On the Canadian host, /openapi.json and /swagger.json return 404, /api-docs
+    returns 404, /.well-known/ai-plugin.json and /.well-known/openid-configuration
+    return 404. /api returns HTTP 404 with the body
+    "RESTEASY003210: Could not find resource for full path:
+    https://ca.flightnetwork.com/api" — evidence of an internal JBoss RESTEasy
+    backend, but nothing documented, versioned, or offered to third parties.
+    /graphql returns HTTP 200 but the body is an Akamai "Request Rejected (Def.)"
+    interstitial, not a GraphQL endpoint. robots.txt disallows /ajax*, /*.action$
+    and the booking funnel paths; the 439-URL sitemap contains no developer,
+    partner, affiliate or API page.
+
+    Flight Network is a retailer, not a content owner. Its own About Us page
+    carries the Amadeus and Sabre marks and states "IATA Certified Travel Agents".
+    Its Etraveli sibling TripStack is the group's B2B flight API (LCC, NDC, FSC
+    and virtual interlining) — that API belongs to TripStack, is sales-gated, and
+    is not published under the Flight Network brand.
+  companyFacts:
+    legalEntity: Flight Network Ltd
+    address: 145 King St. West Suite 2850, Toronto, Ontario, Canada, M5H 1J8
+    corpId: '89322 6712'
+    vat: 89322 6712 RT0001
+    ticoRegistration: '50009248'
+    founded: '2005'
+    parent: Etraveli Group (acquired 2019)
+    homeMarket: Canada
+    scaleClaim: 75+ markets, 35 languages, 40 million travelers annually (company
+      claim on About Us)
+    verbatimFooter: "Flight Network / Flight Network Ltd, 145 King St. West Suite\
+      \ 2850, Toronto, Ontario, Canada, M5H 1J8 Corp. ID no. 89322 6712 VAT nr: 89322\
+      \ 6712 RT0001 TICO Registration #: 50009248"
+switchingCost:
+  interfaceShape:
+    value: none-published
+    standardNamed: none
+    evidence: |
+      No API contract of any shape is published — not an open standard, not a
+      proprietary documented one. No OpenTravel/OTA message set, no IATA NDC
+      (17.2/21.3) schema reference, no HTNG, no OAuth-protected REST surface, no
+      GraphQL schema, no SOAP WSDL is referenced anywhere on flightnetwork.com.
+      The only machine-readable artifacts on the domain are robots.txt,
+      sitemap.xml, security.txt, apple-app-site-association and assetlinks.json.
+    probed:
+    - url: https://ca.flightnetwork.com/openapi.json
+      status: 404
+    - url: https://ca.flightnetwork.com/swagger.json
+      status: 404
+    - url: https://ca.flightnetwork.com/api-docs
+      status: 404
+    - url: https://ca.flightnetwork.com/api
+      status: 404
+      note: 'Body: RESTEASY003210: Could not find resource for full path. Internal
+        JBoss RESTEasy backend, undocumented.'
+    - url: https://ca.flightnetwork.com/graphql
+      status: 200
+      note: Body is an Akamai "Request Rejected (Def.)" HTML interstitial, not a GraphQL
+        endpoint.
+    - url: https://ca.flightnetwork.com/.well-known/openid-configuration
+      status: 404
+    - url: https://ca.flightnetwork.com/.well-known/ai-plugin.json
+      status: 404
+  secondSource:
+    value: interchangeable-alternatives
+    evidence: |
+      Flight Network holds no unique inventory. Every fare it sells originates
+      with an airline and is reached through Amadeus, Sabre, or Etraveli/TripStack
+      aggregation; its hotel and car content is resold. A consumer or an affiliate
+      publisher can obtain the identical capability with effectively zero
+      migration cost.
+    alternativesConsidered:
+    - Etraveli's own sibling brands Gotogate and Mytrip, which run the same
+      underlying platform
+    - Expedia.ca — the larger OTA in the same Canadian market
+    - Booking.com, which already supplies Flight Network's hotel and car content
+    - Google Flights, Skyscanner and Kayak as metasearch routes to the same fares
+    - Booking direct with Air Canada, WestJet or Porter, which removes the
+      intermediary entirely
+    caveat: |
+      This is the OTA-layer answer. It is precisely the opposite of the answer for
+      the carriers upstream of it: for Air Canada's or WestJet's own inventory
+      there is no second source. Flight Network's replaceability is a property of
+      being a retailer, not a sign of a healthy interface.
+  exitPath:
+    value: no-export-published
+    evidence: |
+      No export, dump, bulk or reporting operation is published, because no API is
+      published. Consumers can look up a single booking through the "My Bookings"
+      web flow, and the site's string bundle exposes refund-status and
+      manage-trip vocabulary, but there is no documented bulk export, no
+      data-portability endpoint, and no developer-facing extract. The privacy
+      policy at /rf/privacy-policy renders client-side and yielded no verifiable
+      portability commitment on fetch; PIPEDA and Quebec Law 25 access rights
+      presumably apply to the Canadian entity, but no implemented mechanism is
+      published, so nothing is claimed here.
+    operationCited: none
+  identifierPortability:
+    summary: Portable industry identifiers on the travel side, vendor-internal keys
+      on the commercial side.
+    portable:
+    - IATA airport codes — used explicitly by the embedded GoClimate CO2 calculator
+      ("The GoClimate calculator uses IATA airport codes for specific flight routes")
+    - Airline PNR / record locator — the site instructs travellers "you may need
+      your airline booking reference number, which you can find on the top of this
+      page", and exposes a MyBookings.RefundStatus.LinkedPNR string
+    - IATA airline designators, implied by the /rf/carriers airline directory
+    proprietary:
+    - Flight Network order number (the key the consumer My Bookings flow hangs on)
+    - AgencyID — a Flight Network-internal travel-seller key surfaced as
+      OrderDetails.AgentInfo.Box.AgencyID.Label alongside Agency name, Agent name
+      and Agent email
+    reading: |
+      The passenger's booking is anchored to an airline PNR, which is portable by
+      construction — the traveller can service the ticket with the carrier. The
+      agency relationship is anchored to a Flight Network AgencyID, which is not.
+  contractualLockIn:
+    published: consumer booking terms only
+    verbatim:
+    - source: https://ca.flightnetwork.com/rf/travel-conditions
+      key: Payment.TermsConditionsAccept.Checkbox.Partner.Text
+      text: "By making this booking, I understand that I will enter into agreements\
+        \ with Flight Network Ltd and the airline(s) that your booking concerns. If\
+        \ I have purchased a service involving SMS updates, I agree to receiving SMS\
+        \ for informational purposes. No personal information will be shared with\
+        \ or sold to third parties for marketing or promotional purposes. I have read\
+        \ and accept Flight Network Ltd"
+    - source: https://ca.flightnetwork.com/rf/travel-conditions
+      key: Payment.TermsConditionsAccept.Checkbox.Amadeus.Text
+      text: Travel Seller has read and accept Flight Network Ltds
+      note: A distinct Amadeus-flavoured acceptance variant addressed to a "Travel
+        Seller" rather than a consumer — evidence that an agent/affiliate channel
+        exists behind the consumer site.
+    - source: https://ca.flightnetwork.com/rf/travel-conditions
+      key: Cart.Row.Markup.Label
+      text: Flight Network service fee
+      note: The intermediation margin is a visible line item in the cart.
+    notPublished: |
+      No minimum term, no exclusivity clause, no full-content agreement, no segment
+      fee schedule, no termination-notice period, and no partner or API agreement
+      is published anywhere on the domain. Nothing is inferred here beyond what is
+      quoted above.
+  accessGate:
+    value: none-published
+    whatADeveloperMustSign: |
+      Nothing, because there is nothing to sign for. Flight Network publishes no
+      developer registration, no key issuance, no application form and no partner
+      agreement. A consumer needs only an account to view bookings. A business
+      wanting programmatic flight content from this corporate family must go to
+      Etraveli Group / TripStack and negotiate a commercial agreement — TripStack
+      publishes no self-serve docs either and routes enquiries to its Chief
+      Commercial Officer. An affiliate wanting to monetise Flight Network traffic
+      joins through a third-party affiliate network (CJ Affiliate and FlexOffers
+      both carry the programme per their own directories), which is link and
+      tracking based, not an API.
+    gated: true
+  distributionModel:
+    value: gds-intermediated
+    evidence: |
+      Flight Network's own About Us page carries the Amadeus and Sabre logos and
+      the claim "IATA Certified Travel Agents", placing it downstream of the GDSs
+      as an accredited retailer. Its hotel and car content is resold from
+      Booking.com. Demand reaches it direct, through its iOS/Android apps, and
+      through metasearch: /.well-known/apple-app-site-association declares
+      universal-link components for /from/skyscanner/air/* and /from/kayak/air/*
+      bound to appIDs com.etraveli.flightnetwork, com.etraveli.gotogate,
+      com.etraveli.mytrip and com.etraveli.travelstart — a literal, machine-readable
+      record of metasearch-originated traffic. robots.txt disallows /from/ and
+      /air/, the same funnel.
+  ndcPosture:
+    value: not applicable — Flight Network is not an airline
+    detail: |
+      No NDC certification level, no NDC API, no IATA NDC registry claim, and no
+      GDS-surcharge policy is published by Flight Network. NDC content reaches this
+      corporate family upstream: Etraveli's B2B arm TripStack markets access to
+      "425+ LCC, NDC & FSC airlines" and virtual interlining through its own
+      sales-gated API. That is a sibling's product, not Flight Network's, and it
+      is not documented publicly either.
+  standardConformance: No standard reference found. IATA airport codes and airline
+    PNRs are used as data keys, but no OpenTravel/OTA, IATA NDC, HTNG or OpenAPI
+    contract is referenced anywhere on the domain.
+probes:
+  dns:
+  - host: developer.flightnetwork.com
+    result: NXDOMAIN
+  - host: developers.flightnetwork.com
+    result: NXDOMAIN
+  - host: docs.flightnetwork.com
+    result: NXDOMAIN
+  - host: api.flightnetwork.com
+    result: NXDOMAIN
+  - host: partner.flightnetwork.com
+    result: NXDOMAIN
+  - host: partners.flightnetwork.com
+    result: NXDOMAIN
+  - host: affiliate.flightnetwork.com
+    result: NXDOMAIN
+  - host: affiliates.flightnetwork.com
+    result: NXDOMAIN
+  - host: b2b.flightnetwork.com
+    result: NXDOMAIN
+  - host: apidocs.flightnetwork.com
+    result: NXDOMAIN
+  - host: sandbox.flightnetwork.com
+    result: NXDOMAIN
+  - host: connect.flightnetwork.com
+    result: NXDOMAIN
+  - host: agent.flightnetwork.com
+    result: NXDOMAIN
+  - host: agents.flightnetwork.com
+    result: NXDOMAIN
+  - host: portal.flightnetwork.com
+    result: NXDOMAIN
+  - host: seller.flightnetwork.com
+    result: NXDOMAIN
+  - host: travelseller.flightnetwork.com
+    result: NXDOMAIN
+  - host: www.flightnetwork.com
+    result: CNAME flightnetwork-web.edgekey.net (Akamai)
+  - host: ca.flightnetwork.com
+    result: CNAME flightnetwork-web.edgekey.net (Akamai)
+  - host: api.tripstack.com
+    result: 136.110.174.135 (sibling company, not Flight Network)
+  http:
+  - url: https://www.flightnetwork.com/
+    status: 403
+    note: Akamai bot mitigation; browsers are served normally.
+  - url: https://flightnetwork.com/
+    status: 403
+  - url: https://ca.flightnetwork.com/
+    status: 200
+  - url: https://ca.flightnetwork.com/c/about-us
+    status: 200
+  - url: https://ca.flightnetwork.com/rf/travel-conditions
+    status: 200
+  - url: https://ca.flightnetwork.com/rf/privacy-policy
+    status: 200
+  - url: https://ca.flightnetwork.com/rf/carriers
+    status: 200
+  - url: https://ca.flightnetwork.com/c/faq
+    status: 200
+  - url: https://ca.flightnetwork.com/robots.txt
+    status: 200
+  - url: https://ca.flightnetwork.com/sitemap.xml
+    status: 200
+    note: 439 URLs, none developer/API/partner related.
+  - url: https://ca.flightnetwork.com/.well-known/security.txt
+    status: 200
+    note: 'Body: Contact: mailto:security@etraveligroup.com'
+  - url: https://ca.flightnetwork.com/.well-known/apple-app-site-association
+    status: 200
+  - url: https://ca.flightnetwork.com/.well-known/assetlinks.json
+    status: 200
+  - url: https://ca.flightnetwork.com/openapi.json
+    status: 404
+  - url: https://ca.flightnetwork.com/swagger.json
+    status: 404
+  - url: https://ca.flightnetwork.com/api-docs
+    status: 404
+  - url: https://ca.flightnetwork.com/api
+    status: 404
+  - url: https://ca.flightnetwork.com/api/v1
+    status: 404
+  - url: https://ca.flightnetwork.com/graphql
+    status: 200
+    note: Akamai Request Rejected interstitial, not GraphQL.
+  - url: https://ca.flightnetwork.com/c/affiliate
+    status: 404
+  - url: https://ca.flightnetwork.com/c/partners
+    status: 404
+  - url: https://www.etraveligroup.com/
+    status: 200
+  - url: https://www.etraveligroup.com/our-platform/b2b/trip-stack/
+    status: 200
+  - url: https://www.tripstack.com/
+    status: 200
+  - url: https://www.linkedin.com/company/flight-network
+    status: 200
+sources:
+- url: https://ca.flightnetwork.com/c/about-us
+  type: About
+  fetched: '2026-07-28'
+  status: 200
+  note: Founding year 2005, Etraveli Group ownership, "IATA Certified Travel Agents",
+    Amadeus and Sabre marks, Toronto legal entity and TICO registration in the footer.
+- url: https://ca.flightnetwork.com/rf/travel-conditions
+  type: TermsOfService
+  fetched: '2026-07-28'
+  status: 200
+  note: Booking-agreement clause naming Flight Network Ltd, the "Flight Network service
+    fee" cart line, the Amadeus "Travel Seller" acceptance variant, and the AgencyID
+    / Agent information vocabulary were read from the page's embedded string bundle.
+- url: https://ca.flightnetwork.com/.well-known/apple-app-site-association
+  type: Artifact
+  fetched: '2026-07-28'
+  status: 200
+  note: Declares /from/skyscanner/air/* and /from/kayak/air/* universal links for
+    com.etraveli.flightnetwork, com.etraveli.gotogate, com.etraveli.mytrip and
+    com.etraveli.travelstart — direct evidence of metasearch-fed distribution.
+- url: https://ca.flightnetwork.com/robots.txt
+  type: Artifact
+  fetched: '2026-07-28'
+  status: 200
+- url: https://ca.flightnetwork.com/.well-known/security.txt
+  type: VulnerabilityDisclosure
+  fetched: '2026-07-28'
+  status: 200
+  note: Single line, contact routed to the parent — security@etraveligroup.com.
+- url: https://www.etraveligroup.com/our-platform/b2b/trip-stack/
+  type: Documentation
+  fetched: '2026-07-28'
+  status: 200
+  note: Sibling B2B "Flights as a Service" API — 425+ LCC/NDC/FSC airlines, virtual
+    interlining, 240M+ daily searches. No developer portal or docs link published;
+    enquiries routed to a named commercial contact.
+actions:
+  openapiHarvested: false
+  specsCount: 0
+  openapiDirectoryCreated: false
+  apisListed: 0
+  reason: |
+    Nothing was fabricated. Flight Network publishes no API, so apis[] is empty and
+    no openapi/ directory was created. The company identity, the distribution
+    position, and the switching-cost evidence are recorded instead — which is the
+    finding: a national-scale OTA whose entire external contract is an HTML booking
+    funnel behind Akamai.
